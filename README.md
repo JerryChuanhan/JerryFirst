@@ -125,7 +125,8 @@ use `school`
 4、查看数据库
 
 ```sql
-show databases  --查看所有的数据库
+show databases  
+--查看所有的数据库
 ```
 
 对比:SQLyog的可视化操作
@@ -317,7 +318,12 @@ character-set-server=utf8
 > 修改
 
 ```sql
--- 修改表名 ALTER TABLE 旧表名 RENAME AS 新表名ALTER TABLE `student1` RENAME AS `student`-- 增加表的字段 ALTER TABLE 表名 ADD 字段名 列属性ALTER TABLE `student` ADD age int(11)-- 修改表的字段 （重命名，修改约束！）-- ALTER TABLE 表名 MODFIY 字段名 列属性[]ALTER TABLE `student1` MODIFY age VARCHAR(11)  -- 修改约束-- ALTER TABLE 表名 CHANGE 旧名字 新名字 列属性[]ALTER TABLE `student` CHANGE age age1 int(1)   -- 字段重命名-- 删除表的字段 : ALTER TABLE 表名 DROP 字段名ALTER TABLE `student` DROP age 
+-- 修改表名 ALTER TABLE 旧表名 RENAME AS 新表名ALTER TABLE `student1` RENAME AS `student`
+-- 增加表的字段 ALTER TABLE 表名 ADD 字段名 列属性ALTER TABLE `student` ADD age int(11)
+-- 修改表的字段 （重命名，修改约束！）
+-- ALTER TABLE 表名 MODFIY 字段名 列属性[]ALTER TABLE `student1` MODIFY age VARCHAR(11)  
+-- 修改约束-- ALTER TABLE 表名 CHANGE 旧名字 新名字 列属性[]ALTER TABLE `student` CHANGE age age1 int(1)  
+-- 字段重命名-- 删除表的字段 : ALTER TABLE 表名 DROP 字段名ALTER TABLE `student` DROP age 
 ```
 
 > 删除表
@@ -367,7 +373,16 @@ DML语言 :数据操作语言
 > insert
 
 ```sql
--- 插入语句（添加）-- INSERT INTO 表名([字段名1，字段2，字段3]VALUES ('值1')，('值1')，('值1')，...... )INSERT into `student111` (`name`) VALUES ('	张三')-- 由于主键自增我们可以省略INSERT INTO `student111` (`NAME`) VALUES ('李四')-- 一般写插入语句，我们一定要数据和字段一一对应！-- 插入多个字段INSERT INTO `student111` (`name`) VALUES ('王五'),('刘大'),('曹啦啦')INSERT into `student111` (`NAME`,`pwd`,`sex`) VALUES ('大树','456987','男'),('小草','321654','女')
+-- 插入语句（添加）
+-- INSERT INTO 表名([字段名1，字段2，字段3]VALUES ('值1')，('值1')，('值1')，...... )
+INSERT into `student111` (`name`) VALUES ('	张三')-- 由于主键自增我们可以省略INSERT INTO `student111` (`NAME`) VALUES ('李四')
+-- 一般写插入语句，我们一定要数据和字段一一对应！
+-- 插入多个字段
+INSERT INTO `student111` (`name`) 
+VALUES ('王五'),('刘大'),('曹啦啦')
+
+INSERT into `student111` (`NAME`,`pwd`,`sex`) 
+VALUES ('大树','456987','男'),('小草','321654','女')
 ```
 
 语法：`INSERT INTO 表名([字段名1，字段2，字段3]VALUES ('值1')，('值1')，('值1')，...... )`
@@ -385,7 +400,13 @@ DML语言 :数据操作语言
 > updae 修改谁   （条件） set 原来的值 = 新值
 
 ```sql
--- 修改学员姓名,带了条件	UPDATE `student111` SET `name` ='略略略' WHERE id =1-- 不指定条件的情况下，会改动所有表	！！UPDATE `student111` SET  `name` = '黑老大'-- 修改多个属性，逗号隔开UPDATE `student111` SET `name` = '黑老大',`email` ='45@163.com' WHERE id =1-- 语法:-- update 表名 set colnum_name = values.[colnum_name = value, ....] where [条件]
+-- 修改学员姓名,带了条件	
+UPDATE `student111` SET `name` ='略略略' WHERE id =1
+-- 不指定条件的情况下，会改动所有表	！！
+UPDATE `student111` SET  `name` = '黑老大'
+-- 修改多个属性，逗号隔开
+UPDATE `student111` SET `name` = '黑老大',`email` ='45@163.com' WHERE id =1
+-- 语法:-- update 表名 set colnum_name = values.[colnum_name = value, ....] where [条件]
 ```
 
 条件 :   where 子句  运算符 ID等于某个值，大于某个值，在某个区间修改........
@@ -405,7 +426,8 @@ DML语言 :数据操作语言
 | OR                  | 我或你\|\|   | 5>1 or 1>2  | true  |
 
 ```sql
--- 通过多个条件定位数据，无上限！   UPDATE `student111` SET `name` ='长江七号' WHERE `name` = '李四' AND sex= '女'
+-- 通过多个条件定位数据，无上限！   
+UPDATE `student111` SET `name` ='长江七号' WHERE `name` = '李四' AND sex= '女'
 ```
 
 语法 : `update 表名 set colnum_name = values.[colnum_name = value, ....] where [条件]`
@@ -424,7 +446,8 @@ DML语言 :数据操作语言
 语法 ： `delete from 表名 [where 条件]`
 
 ```sql
--- 删除数据 (避免这样写，会全部删除) DELETE FROM `student111` -- 删除指定数据DELETE FROM `student111` WHERE id =1
+-- 删除数据 (避免这样写，会全部删除) DELETE FROM `student111` 
+-- 删除指定数据DELETE FROM `student111` WHERE id =1
 ```
 
 
@@ -462,7 +485,22 @@ DML语言 :数据操作语言
 > select 语法
 
 ```sql
-SELECT    [ALL | DISTINCT | DISTINCTROW ]    [HIGH_PRIORITY]    [STRAIGHT_JOIN]    [SQL_SMALL_RESULT] [SQL_BIG_RESULT] [SQL_BUFFER_RESULT]    [SQL_CACHE | SQL_NO_CACHE] [SQL_CALC_FOUND_ROWS]    select_expr, ...    [INTO OUTFILE 'file_name' export_options   | INTO DUMPFILE 'file_name']    FROM table_references    [WHERE where_definition] -- 指定结果需满足的条件    [GROUP BY {col_name | expr | position} -- 指定结果按照哪几个字段分组      [ASC | DESC], ... [WITH ROLLUP]]    [HAVING where_definition] -- 过滤分组记录必须满足的次要条件    [ORDER BY {col_name | expr | position}  -- 指定查询记录按一个或多个条件排序      [ASC | DESC] , ...]    [LIMIT {[offset,] row_count | row_count OFFSET offset}]-- 指定查询的记录从哪条至哪条    [PROCEDURE procedure_name(argument_list)]    [FOR UPDATE | LOCK IN SHARE MODE]]
+SELECT    [ALL | DISTINCT | DISTINCTROW ]   
+[HIGH_PRIORITY]    [STRAIGHT_JOIN]    
+[SQL_SMALL_RESULT] [SQL_BIG_RESULT] [SQL_BUFFER_RESULT]    
+[SQL_CACHE | SQL_NO_CACHE] [SQL_CALC_FOUND_ROWS]  
+select_expr, ...  
+[INTO OUTFILE 'file_name' export_options   |
+INTO DUMPFILE 'file_name']   
+FROM table_references    
+[WHERE where_definition] 
+
+-- 指定结果需满足的条件   
+[GROUP BY {col_name | expr | position} 
+-- 指定结果按照哪几个字段分组      [ASC | DESC], ... [WITH ROLLUP]]    [HAVING where_definition] 
+-- 过滤分组记录必须满足的次要条件    [ORDER BY {col_name | expr | position}  
+-- 指定查询记录按一个或多个条件排序      [ASC | DESC] , ...]    [LIMIT {[offset,] row_count | row_count OFFSET offset}]-
+- 指定查询的记录从哪条至哪条    [PROCEDURE procedure_name(argument_list)]    [FOR UPDATE | LOCK IN SHARE MODE]]
 ```
 
 
@@ -470,12 +508,15 @@ SELECT    [ALL | DISTINCT | DISTINCTROW ]    [HIGH_PRIORITY]    [STRAIGHT_JOIN] 
 ### 4.2、指定查询字段
 
 ```sql
--- 查询全部学生 SELECT 字段 FROM 表SELECT * FROM student-- 查询指定字段		SELECT  `StudentNo` ,`StudentName`  FROM `student`-- 别名，给结果起一个名字  AS  可以给字段起别名，也可以给表起别名SELECT  `StudentNo` AS 学号 ,`StudentName` AS 学生姓名  FROM `student` AS s-- 函数 CONCAT(a,b)SELECT CONCAT('姓名 :  ',StudentName) AS 新名字 FROM student
+-- 查询全部学生 SELECT 字段 FROM 表SELECT * FROM student-- 查询指定字段		
+SELECT  `StudentNo` ,`StudentName`  FROM `student`
+-- 别名，给结果起一个名字  AS  可以给字段起别名，也可以给表起别名SELECT  `StudentNo` AS 学号 ,`StudentName` AS 学生姓名  FROM `student` AS s
+-- 函数 CONCAT(a,b)SELECT CONCAT('姓名 :  ',StudentName) AS 新名字 FROM student
 ```
 
 语法 : `select 字段 ...from 表`
 
-> 有的时候，列名字不是那么见名知意。我们起别名   AS   字段名   AS   别名             表名   AS   别名
+> 有的时候，列名字不是那么见名知意。我们起别名   AS 字段名 AS   别名        表名   AS   别名
 
 
 
@@ -488,13 +529,20 @@ SELECT    [ALL | DISTINCT | DISTINCTROW ]    [HIGH_PRIORITY]    [STRAIGHT_JOIN] 
 作用  ： 去除select查询出来的结果中重复的数据，只显示一条
 
 ```sql
--- 查询一下有哪些同学参加了考试，成绩SELECT * FROM result             -- 查询全部的成绩考试SELECT `StudentNo` FROM result   -- 查询有哪些同学参加了考试SELECT DISTINCT `StudentNo` AS 参加考试同学编号 FROM result  -- 发现重复数据，去重
+-- 查询一下有哪些同学参加了考试，成绩SELECT * FROM result             
+-- 查询全部的成绩考试SELECT `StudentNo` FROM result   
+-- 查询有哪些同学参加了考试SELECT DISTINCT `StudentNo` AS 参加考试同学编号 FROM result  
+-- 发现重复数据，去重
 ```
 
 > 数据库的列   （表达式）
 
 ```sql
-SELECT VERSION()  -- 查看系统版本 （函数）SELECT 100*2-1 As 计算结果  -- 用来计算 （表达式）SELECT @@auto_increment_increment  -- 查询自增的步长 （变量）-- 学员考试成绩 +1 分查看SELECT `StudentNo` ,`StudentResult` +1  AS 提分后 FROM result
+SELECT VERSION()  
+-- 查看系统版本 （函数）SELECT 100*2-1 As 计算结果  
+-- 用来计算 （表达式）SELECT @@auto_increment_increment  
+-- 查询自增的步长 （变量）
+-- 学员考试成绩 +1 分查看SELECT `StudentNo` ,`StudentResult` +1  AS 提分后 FROM result
 ```
 
 ==数据库中的表达式	： 文本值， 列，NULL ，函数，计算表达式，系统变量....==
@@ -522,7 +570,13 @@ select   `表达式`    from    表
 
 
 ```sql
--- ==========================where=============================SELECT `studentno`AS 编号 ,`studentresult`AS 成绩 FROM result-- 查询考试成绩在 95~100分之间SELECT `studentno`AS 编号 ,`studentresult`AS 成绩 FROM resultWHERE studentresult >=95 and studentresult <=100-- and  && SELECT `studentno`AS 编号 ,`studentresult`AS 成绩 FROM resultWHERE studentresult >=95 && studentresult <=100-- 模糊查询（区间）SELECT `studentno`AS 编号,`studentresult` AS 成绩 FROM resultWHERE `studentresult` BETWEEN 95 AND 100-- 除了1000号学生之外的同学的成绩SELECT `studentno`AS 编号,`studentresult` AS 成绩 FROM resultWHERE `studentno` !=1000-- !=  NOTSELECT `studentno`AS 编号,`studentresult` AS 成绩 FROM resultWHERE  NOT `studentno` = 1000
+-- ==========================where=============================
+SELECT `studentno`AS 编号 ,`studentresult`AS 成绩 FROM result
+-- 查询考试成绩在 95~100分之间SELECT `studentno`AS 编号 ,`studentresult`AS 成绩 FROM resultWHERE studentresult >=95 and studentresult <=100
+-- and  && SELECT `studentno`AS 编号 ,`studentresult`AS 成绩 FROM resultWHERE studentresult >=95 && studentresult <=100
+-- 模糊查询（区间）SELECT `studentno`AS 编号,`studentresult` AS 成绩 FROM resultWHERE `studentresult` BETWEEN 95 AND 100
+-- 除了1000号学生之外的同学的成绩SELECT `studentno`AS 编号,`studentresult` AS 成绩 FROM resultWHERE `studentno` !=1000
+-- !=  NOTSELECT `studentno`AS 编号,`studentresult` AS 成绩 FROM resultWHERE  NOT `studentno` = 1000
 ```
 
 > 模糊查询	： 比较运算符
@@ -536,7 +590,22 @@ select   `表达式`    from    表
 | **in**      | a in(a1,a2,a3......) | 假设 a在a1，或者a2....其中的某一个值中，结果为真 |
 
 ```sql
--- ======================  模糊查询  =================================-- 查询姓刘的同学-- like 结合 %(代表0到任意个字符)   _（一个字符）SELECT `studentno` ,`studentname` FROM studentWHERE studentname like '刘%'-- 查询姓刘的同学,名字后面只有一个字的SELECT `studentno` AS 编号 ,`studentname` as 姓名 FROM studentWHERE studentname like '刘_'-- 查询姓刘的同学,名字后面只有2个字的SELECT `studentno` AS 编号 ,`studentname` as 姓名 FROM studentWHERE studentname like '刘__'-- 查询名字中间有嘉字的同学 %可%SELECT `studentno` AS 编号 ,`studentname` as 姓名 FROM studentWHERE studentname like '%可%'-- ====================   in （具体的一个或多个值）    =============================-- 查询1001,1002,1003号学员信息SELECT `studentno` AS 编号 ,`studentname` as 姓名 FROM studentWHERE `studentno`in (1001,1002,1003)-- 查询在北京的学生SELECT `studentno` AS 编号 ,`studentname` as 姓名 FROM studentWHERE `address` in ('安徽')-- ================    null       not null     =====================================-- 查询地址为空的学生	 null  '' SELECT `studentno` AS 编号 ,`studentname` as 姓名 FROM studentWHERE `address` = '' or address IS null -- 查询有出生日期的学生   不为空SELECT `studentno` AS 编号 ,`studentname` as 姓名 FROM studentwhere  borndate is not NULL
+-- ======================  模糊查询  =================================
+-- 查询姓刘的同学
+-- like 结合 %(代表0到任意个字符)   _（一个字符）
+SELECT `studentno` ,`studentname` FROM studentWHERE studentname like '刘%'
+-- 查询姓刘的同学,名字后面只有一个字的SELECT `studentno` AS 编号 ,`studentname` as 姓名 FROM studentWHERE studentname like '刘_'
+-- 查询姓刘的同学,名字后面只有2个字的SELECT `studentno` AS 编号 ,`studentname` as 姓名 FROM studentWHERE studentname like '刘__'
+-- 查询名字中间有嘉字的同学 %可%SELECT `studentno` AS 编号 ,`studentname` as 姓名 FROM studentWHERE studentname like '%可%'
+-- ====================   in （具体的一个或多个值）    =============================
+-- 查询1001,1002,1003号学员信息SELECT `studentno` AS 编号 ,`studentname` as 姓名 FROM studentWHERE `studentno`in (1001,1002,1003)
+-- 查询在北京的学生SELECT `studentno` AS 编号 ,`studentname` as 姓名 FROM studentWHERE `address` in ('安徽')
+
+-- ================    null       not null     =====================================
+
+-- 查询地址为空的学生	 null  '' 
+SELECT `studentno` AS 编号 ,`studentname` as 姓名 FROM studentWHERE `address` = '' or address IS null 
+-- 查询有出生日期的学生   不为空SELECT `studentno` AS 编号 ,`studentname` as 姓名 FROM studentwhere  borndate is not NULL
 ```
 
 ### 4.4、连表查询
@@ -544,7 +613,17 @@ select   `表达式`    from    表
 > JOIN 对比
 
 ```sql
--- =============  连表查询  join ===========================-- 查询参加了考试的同学（学号，姓名，科目编号，分数）SELECT * FROM student/*思路	1.分析需求，分析查询字段来自哪些表，（连接查询）2.确定使用哪种连接查询？  7种确定交叉点（这两个表中哪个数据是相同的）判断的条件  ： 学生表中的   studentno  = 成绩表  studentno*/SELECT s.studentno AS 编号 ,`studentname` AS 姓名,`subjectno` as 课程编号,`studentresult` AS 成绩FROM student AS sINNER JOIN result AS rWHERE s.studentno =r.StudentNo-- Right JoinSELECT r.studentno AS 编号 ,`studentname` AS 姓名,`subjectno` as 课程编号,`studentresult` AS 成绩FROM student AS sRIGHT JOIN  result AS rON s.studentno =r.StudentNo-- Left JoinSELECT r.studentno AS 编号 ,`studentname` AS 姓名,`subjectno` as 课程编号,`studentresult` AS 成绩FROM student AS sleft  JOIN  result AS rON s.studentno =r.StudentNo
+-- =============  连表查询  join ===========================
+-- 查询参加了考试的同学（学号，姓名，科目编号，分数）SELECT * FROM student/*思路	
+1.分析需求，分析查询字段来自哪些表，（连接查询）2.确定使用哪种连接查询？  
+7种确定交叉点（这两个表中哪个数据是相同的）
+判断的条件  ： 学生表中的   studentno  = 成绩表  
+studentno*/SELECT s.studentno AS 编号 ,`studentname` AS 姓名,`subjectno` as 课程编号,`studentresult` AS 成绩FROM student AS s
+INNER JOIN result AS rWHERE s.studentno =r.StudentNo
+-- Right JoinSELECT r.studentno AS 编号 ,`studentname` AS 姓名,`subjectno` as 课程编号,`studentresult` AS 成绩FROM student AS s
+RIGHT JOIN  result AS rON s.studentno =r.StudentNo
+-- Left JoinSELECT r.studentno AS 编号 ,`studentname` AS 姓名,`subjectno` as 课程编号,`studentresult` AS 成绩FROM student AS s
+left  JOIN  result AS rON s.studentno =r.StudentNo
 ```
 
 | 操作         | 描述                                     |
@@ -554,7 +633,33 @@ select   `表达式`    from    表
 | Right   Join | 会从右表返回所有的值，即使左表中没有匹配 |
 
 ```sql
--- =============  连表查询  join ===========================-- 查询参加了考试的同学（学号，姓名，科目编号，分数）SELECT * FROM student/*思路	1.分析需求，分析查询字段来自哪些表，（连接查询）2.确定使用哪种连接查询？  7种确定交叉点（这两个表中哪个数据是相同的）判断的条件  ： 学生表中的   studentno  = 成绩表  studentno*/-- JOIN（连接的表） ON（判断的条件） 连接查询-- where  等值查询SELECT s.studentno AS 编号 ,`studentname` AS 姓名,`subjectno` as 课程编号,`studentresult` AS 成绩FROM student AS sINNER JOIN result AS rWHERE s.studentno =r.StudentNo-- Right JoinSELECT r.studentno AS 编号 ,`studentname` AS 姓名,`subjectno` as 课程编号,`studentresult` AS 成绩FROM student AS sRIGHT JOIN  result AS rON s.studentno =r.StudentNo-- Left JoinSELECT r.studentno AS 编号 ,`studentname` AS 姓名,`subjectno` as 课程编号,`studentresult` AS 成绩FROM student AS sleft  JOIN  result AS rON s.studentno =r.StudentNo-- 查询缺考的同学SELECT r.studentno AS 编号 ,`studentname` AS 姓名,`subjectno` as 课程编号,`studentresult` AS 成绩FROM student AS sleft  JOIN  result AS rON s.studentno =r.StudentNoWHERE studentresult is NULL-- 思考题（查询了参加考试的同学的信息 ： 学号， 学生姓名， 科目名 ，分数）/*思路	1.分析需求，分析查询字段来自哪些表，（连接查询）2.确定使用哪种连接查询？  7种确定交叉点（这两个表中哪个数据是相同的）判断的条件  ： 学生表中的   studentno  = 成绩表  studentno*/SELECT  s.StudentNo AS 学号 ,StudentName AS 姓名 ,subjectname as 科目名,StudentResult as 成绩FROM student AS sLEFT JOIN result AS ron s.studentno = r.StudentNoINNER JOIN `subject` as subON s.gradeid =sub.gradeid-- 我要查询哪些数据....-- 从哪几个表中查询  from 表 xxx Join	连接的表  on 交叉条件-- 假设存在一种多张表查询 ，慢慢来，先查询两张表然后再慢慢增加-- from  a left join   b-- from  a right join  b
+-- =============  连表查询  join ===========================
+- 查询参加了考试的同学（学号，姓名，科目编号，分数）SELECT * FROM student
+/*思路	
+1.分析需求，分析查询字段来自哪些表，（连接查询）2.确定使用哪种连接查询？  
+7种确定交叉点（这两个表中哪个数据是相同的）判断的条件  ： 学生表中的   studentno  = 成绩表  studentno
+*/
+-- JOIN（连接的表） ON（判断的条件） 连接查询
+-- where  等值查询
+SELECT s.studentno AS 编号 ,`studentname` AS 姓名,`subjectno` as 课程编号,`studentresult` AS 成绩FROM student AS sINNER JOIN result AS r
+WHERE s.studentno =r.StudentNo
+-- Right JoinSELECT r.studentno AS 编号 ,`studentname` AS 姓名,`subjectno` as 课程编号,`studentresult` AS 成绩FROM student AS sRIGHT JOIN  result AS r
+ON s.studentno =r.StudentNo
+-- Left JoinSELECT r.studentno AS 编号 ,`studentname` AS 姓名,`subjectno` as 课程编号,`studentresult` AS 成绩FROM student AS sleft  JOIN  result AS r
+ON s.studentno =r.StudentNo
+-- 查询缺考的同学SELECT r.studentno AS 编号 ,`studentname` AS 姓名,`subjectno` as 课程编号,`studentresult` AS 成绩FROM student AS sleft  JOIN  result AS r
+ON s.studentno =r.StudentNoWHERE studentresult is NULL
+-- 思考题（查询了参加考试的同学的信息 ： 学号， 学生姓名， 科目名 ，分数）
+/*思路	
+1.分析需求，分析查询字段来自哪些表，（连接查询）
+2.确定使用哪种连接查询？  
+7种确定交叉点（这两个表中哪个数据是相同的）
+判断的条件  ： 学生表中的   studentno  = 成绩表  studentno*/SELECT  s.StudentNo AS 学号 ,StudentName AS 姓名 ,subjectname as 科目名,StudentResult as 成绩FROM student AS s
+LEFT JOIN result AS ron s.studentno = r.StudentNo
+INNER JOIN `subject` as subON s.gradeid =sub.gradeid
+-- 我要查询哪些数据....-- 从哪几个表中查询  from 表 xxx Join	连接的表  on 交叉条件
+-- 假设存在一种多张表查询 ，慢慢来，先查询两张表然后再慢慢增加
+-- from  a left join   b-- from  a right join  b
 ```
 
 > 自连接
@@ -566,19 +671,38 @@ select   `表达式`    from    表
 > 排序
 
 ```sql
--- 排序 ： 升序 ASC  , 降序DESC-- ORDER BY 通过哪个字段排序 ， 怎么排-- 查询的结果根据 成绩升序 降序SELECT s.studentno AS 编号 ,`studentname` AS 姓名,`subjectno` as 课程编号,`studentresult` AS 成绩FROM student AS sINNER JOIN result AS rWHERE s.studentno =r.StudentNoORDER BY StudentResult ASC
+-- 排序 ： 升序 ASC  , 降序DESC
+-- ORDER BY 通过哪个字段排序 ， 怎么排
+-- 查询的结果根据 成绩升序 降序
+SELECT s.studentno AS 编号 ,`studentname` AS 姓名,`subjectno` as 课程编号,`studentresult` AS 成绩FROM student AS s
+INNER JOIN result AS rWHERE s.studentno =r.StudentNoORDER BY StudentResult ASC
 ```
 
 > 分页
 
 ```sql
--- 为什么要分页-- 缓解数据库压力，给人的体验更好     瀑布流-- 分页 ， 每页只显示五条数据-- 语法 ：  limit 起始值  ，页面的大小-- 网页应用 ： 当前页， 总的页数 ， 页面的大小-- LIMIT  0,5	      1~5	-- LIMIT  1,5        2~6-- 第一页  limit 0,5    （1-1）*5-- 第二页  limit 5,5     （2-1）*5-- 第三页  limit 10,5      （3-1）*5-- 第N页  limit 0,5            （N-1）* pagesize，pagesize-- 【 pagesize  :  页面大小 	】-- 【（n-1）*pagesize起始值】-- 【 n  当前页】-- 【数据总数/页面大小  = 总页数】SELECT s.studentno AS 编号 ,`studentname` AS 姓名,`subjectno` as 课程编号,`studentresult` AS 成绩FROM student AS sINNER JOIN result AS rWHERE s.studentno =r.StudentNoORDER BY StudentResult ASCLIMIT  1,5
+-- 为什么要分页-- 缓解数据库压力，给人的体验更好     瀑布流
+-- 分页 ， 每页只显示五条数据
+-- 语法 ：  limit 起始值  ，页面的大小-- 网页应用 ： 当前页， 总的页数 ， 页面的大小
+-- LIMIT  0,5	      1~5	-- LIMIT  1,5        2~6-- 第一页  limit 0,5    （1-1）*5
+-- 第二页  limit 5,5     （2-1）*5-- 第三页  limit 10,5      （3-1）*5-- 第N页  limit 0,5            （N-1）* pagesize，pagesize-- 【 pagesize  :  页面大小 	】
+-- 【（n-1）*pagesize起始值】
+-- 【 n  当前页】
+-- 【数据总数/页面大小  = 总页数】
+SELECT s.studentno AS 编号 ,`studentname` AS 姓名,`subjectno` as 课程编号,`studentresult` AS 成绩FROM student AS s
+INNER JOIN result AS rWHERE s.studentno =r.StudentNo
+ORDER BY StudentResult ASCLIMIT  1,5
 ```
 
 语法 ： `limit (查询起始下标，pagesize)`
 
 ```sql
--- 思考 ： 查询 JAVA第一学年 课程成绩排名前十的学生，并且分数要大于80的学生信息（学号，姓名，课程名称，分数）SELECT s.studentno AS 学号 , studentname AS 姓名, subjectname AS 课程名称 , studentresult AS 分数FROM student  AS sINNER JOIN result AS ron s.studentno = r.studentnoINNER JOIN  `subject` as subON s.gradeid = sub.gradeidWHERE subjectname = 'JAVA第一学年' AND studentresult >=80ORDER BY studentresult DESCLIMIT 0,10  
+-- 思考 ： 查询 JAVA第一学年 课程成绩排名前十的学生，并且分数要大于80的学生信息（学号，姓名，课程名称，分数）
+SELECT s.studentno AS 学号 , studentname AS 姓名, subjectname AS 课程名称 , studentresult AS 分数FROM student  AS s
+INNER JOIN result AS ron s.studentno = r.studentno
+INNER JOIN  `subject` as subON s.gradeid = sub.gradeid
+WHERE subjectname = 'JAVA第一学年' AND studentresult >=80
+ORDER BY studentresult DESCLIMIT 0,10  
 ```
 
 ### 4.6、子查询
@@ -592,7 +716,13 @@ where（select   *   from）
 ### 4.7、分组和过滤
 
 ```sql
--- 查询不同课程的平均分，最高分，最低分，平均分大于80分-- 核心  ： （根据不同的课程分组）SELECT subjectname as 课程名,AVG( studentresult) as 平均分,MAX(studentresult) as 最高分,MIN(studentresult) as 最低分FROM student as sINNER JOIN result as r ON  r.studentno =s.studentnoINNER JOIN `subject` as sub  on s.gradeid =sub.GradeIDGROUP BY sub.subjectname -- 通过什么字段来分组	HAVING 平均分 >=80
+-- 查询不同课程的平均分，最高分，最低分，平均分大于80分
+-- 核心  ： （根据不同的课程分组）
+SELECT subjectname as 课程名,AVG( studentresult) as 平均分,MAX(studentresult) as 最高分,MIN(studentresult) as 最低分
+FROM student as s
+INNER JOIN result as r ON  r.studentno =s.studentnoINNER JOIN `subject` as sub  on s.gradeid =sub.GradeID
+GROUP BY sub.subjectname 
+-- 通过什么字段来分组	HAVING 平均分 >=80
 ```
 
 ### 4.8、select小结
@@ -602,7 +732,25 @@ where（select   *   from）
 ## 5、MySQL函数
 
 ```sql
--- =========     常用函数    ================== -- 数学运算SELECT ABS(-8) -- 绝对值SELECT CEILING(9.4) -- 向上取整SELECT FLOOR(9.4)   -- 向下取整SELECT RAND()   -- 返回一个 0~1的随机数SELECT SIGN(10)  -- 判断一个数的符号  0-0 负数返回 -1  正数返回 1-- 字符串函数SELECT CHAR_LENGTH('心有多大舞台就有多大')  -- 字符串长度SELECT CONCAT('我','爱','Java') -- 拼接字符串SELECT INSERT ('我爱 HELLO  WORD !',1,2,'超级热爱') -- 查询，从某个位置开始替换某个长度SELECT LOWER('ADAFSF') -- 转小写字母SELECT UPPER('asfds')  -- 转大写字母SELECT REPLACE('好好学习，能取得好成绩','能','一定能')  -- 替换出现的指定字符串-- 时间和日期函数（记住）SELECT CURRENT_DATE() -- 获取当前日期SELECT CURDATE()  -- 获取当前日期SELECT NOW()  -- 获取当前时间SELECT   LOCALTIME() -- 本地实际SELECT SYSDATE()   -- 系统时间SELECT 	year(NOW())SELECT MONTH(now())SELECT day(now())SELECT hour(now())SELECT minute(now())SELECT second(now())-- 系统SELECT SYSTEM_USER()SELECT USER()SELECT VERSION()
+-- =========     常用函数    ================== 
+-- 数学运算SELECT ABS(-8) 
+-- 绝对值SELECT CEILING(9.4) 
+-- 向上取整SELECT FLOOR(9.4)   
+-- 向下取整SELECT RAND()   
+-- 返回一个 0~1的随机数SELECT SIGN(10)  
+-- 判断一个数的符号  0-0 负数返回 -1  正数返回 1
+-- 字符串函数SELECT CHAR_LENGTH('心有多大舞台就有多大')  
+-- 字符串长度SELECT CONCAT('我','爱','Java') 
+- 拼接字符串SELECT INSERT ('我爱 HELLO  WORD !',1,2,'超级热爱') 
+-- 查询，从某个位置开始替换某个长度SELECT LOWER('ADAFSF') 
+-- 转小写字母SELECT UPPER('asfds')  -- 转大写字母SELECT REPLACE('好好学习，能取得好成绩','能','一定能')  
+-- 替换出现的指定字符串-- 时间和日期函数（记住）SELECT CURRENT_DATE() 
+-- 获取当前日期SELECT CURDATE() 
+-- 获取当前日期SELECT NOW()  
+-- 获取当前时间SELECT   LOCALTIME() 
+-- 本地实际SELECT SYSDATE()   
+-- 系统时间SELECT 	year(NOW())  SELECT MONTH(now())  SELECT day(now())  SELECT hour(now())  SELECT minute(now())  SELECT second(now())
+-- 系统SELECT SYSTEM_USER()SELECT USER()SELECT VERSION()
 ```
 
 ### 5.2、聚合函数（常用）
@@ -617,7 +765,15 @@ where（select   *   from）
 | ...       | .....  |
 
 ```sql
- -- ===============  聚合函数  ======================-- 都能够统计 表中的数据（想查询一个表中有多少记录，就使用这个count（））SELECT COUNT(studentname) FROM student  -- Count(指定列) ，会忽略所有的null值SELECT COUNT(*) FROM student            -- Count （*）  ，不会忽略所有的null值  ，本质 计数行数SELECT COUNT(1) FROM student            -- Count （1）  ，会忽略所有的null值  ，本质 计数行数SELECT SUM(`studentresult`) as 总和 FROM resultSELECT AVG( `studentresult`) as 平均分 FROM resultSELECT MAX(`studentresult`) AS 最高分 FROM resultSELECT MIN(`studentresult`) as  最低分 FROM result
+ -- ===============  聚合函数  ======================
+ -- 都能够统计 表中的数据（想查询一个表中有多少记录，就使用这个count（））
+ SELECT COUNT(studentname) FROM student  
+ -- Count(指定列) ，会忽略所有的null值SELECT COUNT(*) FROM student            
+ -- Count （*）  ，不会忽略所有的null值  ，本质 计数行数
+ SELECT COUNT(1) FROM student            
+ -- Count （1）  ，会忽略所有的null值  ，本质 计数行数
+ SELECT SUM(`studentresult`) as 总和 FROM resultSELECT AVG( `studentresult`) as 平均分 FROM resultSELECT MAX(`studentresult`) AS 最高分 
+ FROM resultSELECT MIN(`studentresult`) as  最低分 FROM result
 ```
 
 ### 5.3、数据库级别的MD5加密（扩展）
@@ -631,7 +787,12 @@ MD5不可逆，具体的值 的 md5 是一样的
 MD5 破解网站的原理，背后有一个词典，MD5加密后的值  加密前的值
 
 ```sql
--- =============  测试MD5加密  ==========================-- 明文密码INSERT into testmd5 VALUES(4,'liuda','852357159')-- 加密update testmd5 set pwd=MD5(pwd) where id =4update testmd5 set pwd=MD5(pwd)  -- 加密全部的密码-- 插入的时候加密insert into testmd5 VALUES (5,'HeiLaoHu',MD5('852951'))-- 如何校验，将用户传递进来的密码，进行MD5加密，然后比对加密后的值select * from testmd5 where `name` ='HeiLaoHu' and MD5('852951')
+-- =============  测试MD5加密  ==========================
+-- 明文密码INSERT into testmd5 VALUES(4,'liuda','852357159')
+-- 加密update testmd5 set pwd=MD5(pwd) where id =4update testmd5 set pwd=MD5(pwd)  
+-- 加密全部的密码-- 插入的时候加密insert into testmd5 VALUES (5,'HeiLaoHu',MD5('852951'))
+-- 如何校验，将用户传递进来的密码，进行MD5加密，然后比对加密后的值
+select * from testmd5 where `name` ='HeiLaoHu' and MD5('852951')
 ```
 
 ## 6、事务
@@ -687,7 +848,21 @@ MD5 破解网站的原理，背后有一个词典，MD5加密后的值  加密�
 > 执行事务
 
 ```sql
- -- ============   事  务  ================-- mysql 是默认开启事务自动提交的set autocommit = 0 /*关闭*/set autocommit = 1 /*开启 （默认的）*/-- 手动处理事务set autocommit = 0  -- 关闭自动提交-- 事务开启	start TRANSACTION -- 标记一个事务的开启，从这之后的SQL 都在同一事务内-- 提交COMMIT-- 回滚ROLLBACK-- 事务结束set autocommit = 1  -- 开启自动提交SAVEPOINT 保存点名  -- 设置一个事务的保存点ROLLBACK to SAVEPOINT 保存点名   -- 回滚到保存点RELEASE  SAVEPOINT 保存点名   -- 撤销保存点
+ -- ============   事  务  ================
+ -- mysql 是默认开启事务自动提交的
+ set autocommit = 0 /*关闭*/
+ set autocommit = 1 /*开启 （默认的）*/
+ -- 手动处理事务set autocommit = 0  
+ -- 关闭自动提交
+ -- 事务开启	
+ start TRANSACTION 
+ -- 标记一个事务的开启，从这之后的SQL 都在同一事务内
+ -- 提交COMMIT-- 回滚ROLLBACK
+ -- 事务结束set autocommit = 1  
+ -- 开启自动提交SAVEPOINT 保存点名  
+ -- 设置一个事务的保存点ROLLBACK to SAVEPOINT 保存点名   
+ -- 回滚到保存点RELEASE  SAVEPOINT 保存点名   
+ -- 撤销保存点
 ```
 
 ## 7、索引
@@ -715,7 +890,14 @@ MD5 破解网站的原理，背后有一个词典，MD5加密后的值  加密�
 基础语法
 
 ```sql
--- 索引的使用-- 1.在创建表的时候给字段增加索引-- 2.创建完毕后，增加索引-- 显示所有的索引信息SHOW INDEX FROM student -- 增加一个全文索引  (索引名) 列名	ALTER TABLE school.`student` ADD FULLTEXT INDEX `studentanme`(`studentname`)-- EXPLAIN 分析SQL执行的状况EXPLAIN select * from student ;  -- 非全文索引EXPLAIN select * from student WHERE MATCH(studentname) AGAINST ('刘') 
+-- 索引的使用
+-- 1.在创建表的时候给字段增加索引
+-- 2.创建完毕后，增加索引
+-- 显示所有的索引信息SHOW INDEX FROM student 
+-- 增加一个全文索引  (索引名) 列名	
+ALTER TABLE school.`student` ADD FULLTEXT INDEX `studentanme`(`studentname`)
+-- EXPLAIN 分析SQL执行的状况EXPLAIN select * from student ;  
+-- 非全文索引EXPLAIN select * from student WHERE MATCH(studentname) AGAINST ('刘') 
 ```
 
 ### 7.2、 测试索引
@@ -831,7 +1013,36 @@ javax.sql
 3. 编写测试代码
 
 ```java
-package com.zhang.lesson01;import java.sql.*;public class JdbcFirstDemo {    public static void main(String[] args) throws ClassNotFoundException, SQLException {        //1.加载驱动        Class.forName("com.mysql.jdbc.Driver");   //固定写法，加载驱动        //2.用户信息和URL        //useUnicode=true&characterEconding=utf8&useSSL=false        String url ="jdbc:mysql://localhost:3306/jdbcstudy?useUnicode=true&characterEnconding=utf8&useSSL=false";        String username ="root";        String password ="123456";        //3.连接成功，数据库对象 Connection 代表数据库        Connection connection = DriverManager.getConnection(url, username, password);        //4.执行SQL对象 Statement 执行SQL对象        Statement statement = connection.createStatement();        //5.执行SQL的对象 去 执行SQL,可能存在结果，查看返回结果        String sql="select * from users";        ResultSet resultSet = statement.executeQuery(sql);//返回的结果集,结果集中封装了我们全部查询出来的结果        while (resultSet.next()){            System.out.println("id=" +resultSet.getObject("id"));            System.out.println("name=" +resultSet.getObject("NAME"));            System.out.println("pwd=" +resultSet.getObject("PASSWORD"));            System.out.println("email=" +resultSet.getObject("email"));            System.out.println("birth=" +resultSet.getObject("birthday"));        }        //6.释放连接        resultSet.close();        statement.close();        connection.close();    }}
+package com.zhang.lesson01;import java.sql.*;
+public class JdbcFirstDemo {    
+public static void main(String[] args) throws ClassNotFoundException, SQLException {     
+//1.加载驱动       
+Class.forName("com.mysql.jdbc.Driver");   
+//固定写法，加载驱动      
+//2.用户信息和URL     
+//useUnicode=true&characterEconding=utf8&useSSL=false     
+String url ="jdbc:mysql://localhost:3306/jdbcstudy?useUnicode=true&characterEnconding=utf8&useSSL=false";  
+String username ="root";      
+String password ="123456";      
+//3.连接成功，数据库对象 Connection 代表数据库    
+Connection connection = DriverManager.getConnection(url, username, password);     
+//4.执行SQL对象 Statement 执行SQL对象     
+Statement statement = connection.createStatement(); 
+//5.执行SQL的对象 去 执行SQL,可能存在结果，查看返回结果    
+String sql="select * from users";      
+ResultSet resultSet = statement.executeQuery(sql);//返回的结果集,结果集中封装了我们全部查询出来的结果   
+while (resultSet.next()){        
+System.out.println("id=" +resultSet.getObject("id"));       
+System.out.println("name=" +resultSet.getObject("NAME"));    
+System.out.println("pwd=" +resultSet.getObject("PASSWORD"));        
+System.out.println("email=" +resultSet.getObject("email"));      
+System.out.println("birth=" +resultSet.getObject("birthday"));     
+}   
+//6.释放连接     
+resultSet.close();  
+statement.close();     
+connection.close();  
+}}
 ```
 
 步骤总结 ： 
@@ -847,7 +1058,16 @@ package com.zhang.lesson01;import java.sql.*;public class JdbcFirstDemo {    pub
 > DriverManger
 
 ```java
-//1.加载驱动        Class.forName("com.mysql.jdbc.Driver");   //固定写法，加载驱动Connection connection = DriverManager.getConnection(url, username, password);//connection 代表数据库//数据库设置自动提交//事务提交//事务回滚        connection.rollback();        connection.commit();        connection.setAutoCommit();
+//1.加载驱动      
+Class.forName("com.mysql.jdbc.Driver");  
+//固定写法，加载驱动Connection connection = DriverManager.getConnection(url, username, password);
+//connection 代表数据库
+//数据库设置自动提交
+//事务提交
+//事务回滚      
+connection.rollback();    
+connection.commit();      
+connection.setAutoCommit();
 ```
 
 
@@ -855,13 +1075,24 @@ package com.zhang.lesson01;import java.sql.*;public class JdbcFirstDemo {    pub
 > URL
 
 ```java
- String url ="jdbc:mysql://localhost:3306/jdbcstudy?useUnicode=true&characterEnconding=utf8&useSSL=false";//mysql -- 3306//jdbc:mysql://locallhost:3306（主机地址：端口号）/数据库名?参数1&参数2&参数3// oracle -- 1521//jdbc:oracle:thin:@locallhost:1521:sid
+ String url ="jdbc:mysql://localhost:3306/jdbcstudy?useUnicode=true&characterEnconding=utf8&useSSL=false";
+ //mysql 
+ -- 3306//jdbc:mysql://locallhost:3306
+ （主机地址：端口号）/数据库名?参数1&参数2&参数3
+ // oracle 
+ -- 1521//jdbc:oracle:thin:@locallhost:1521:sid
 ```
 
-> Statement 执行SQL的对象                   PrepareStatement执行SQL的对象
+> Statement 执行SQL的对象                  
+>  PrepareStatement执行SQL的对象
 
 ```java
-    String sql="select * from users";   //编写SQL            statement.executeQuery();  //查询操作，返回ResultSet        statement.execute();//执行任何SQL        statement.executeUpdate();//更新，插入，删除。都是用这个，返回一个受影响的行数
+    String sql="select * from users"; 
+    //编写SQL          
+    statement.executeQuery();  
+    //查询操作，返回ResultSet  
+    statement.execute();//执行任何SQL   
+    statement.executeUpdate();//更新，插入，删除。都是用这个，返回一个受影响的行数
 ```
 
 > ResulltSet 查询的结果集 ： 封装了所有的查询结果
@@ -869,19 +1100,33 @@ package com.zhang.lesson01;import java.sql.*;public class JdbcFirstDemo {    pub
 获得指定的数据类型
 
 ```java
-resultSet.getObject(); //在不知道列类型的情况下使用//如果知道列的类型就使用指定的类型resultSet.getString();resultSet.getInt();resultSet.getFloat();resultSet.getDate();.....
+resultSet.getObject(); 
+//在不知道列类型的情况下使用
+//如果知道列的类型就使用指定的类型
+resultSet.getString();
+resultSet.getInt();
+resultSet.getFloat();
+resultSet.getDate();
+.....
 ```
 
 遍历，指针
 
 ```
-resultSet.beforeFirst(); //移动到最前面resultSet.afterLast();   //移动到最后面resultSet.next();   //移动到下一个数据resultSet.previous(); //移动到下一行resultSet.absolute(row); //移动到指定行
+resultSet.beforeFirst(); 
+//移动到最前面resultSet.afterLast();
+//移动到最后面resultSet.next(); 
+//移动到下一个数据resultSet.previous(); 
+//移动到下一行resultSet.absolute(row); 
+//移动到指定行
 ```
 
 > 释放资源
 
 ```
-//6.释放连接resultSet.close();statement.close();connection.close(); //耗资源，用完关掉！
+//6.释放连接resultSet.close();
+statement.close();connection.close(); 
+//耗资源，用完关掉！
 ```
 
 ### 10.4、statement对象
@@ -892,20 +1137,32 @@ resultSet.beforeFirst(); //移动到最前面resultSet.afterLast();   //移动�
 
 Statement.executeQuery方法用于向数据库发送查询语句，executeQuery方法返回代表查询结果的ResultSet对象。
 
-> CRUD操作 -- create
+> CRUD操作 
+> -- create
 
 使用executeUpdate(String sql)方法完成数据添加操作	，示例操作 :
 
 ```java
-statement st =conn.createstatement():String sql = "insert into user(...)values(...)";int num =st.executeUpdate(sql);if(num>0){  system.out.println("插入成功！！")}
+statement st =conn.createstatement():
+String sql = "insert into user(...)values(...)";
+int num =st.executeUpdate(sql);
+if(num>0){ 
+system.out.println("插入成功！！")
+}
 ```
 
-> CRUD操作  -- delete
+> CRUD操作 
+>-- delete
 
 使用executeUpdate(String sql)方法完成数据删除操作，示例操作 ： 
 
 ```java
-statement st =conn.createstatement():String sql = "delete from user where id =1";int num =st.executeUpdate(sql);if(num>0){  system.out.println("删除成功！！")}
+statement st =conn.createstatement():
+String sql = "delete from user where id =1";
+int num =st.executeUpdate(sql);
+if(num>0){ 
+system.out.println("删除成功！！")
+}
 ```
 
 > CRUD操作  -- update
@@ -913,7 +1170,12 @@ statement st =conn.createstatement():String sql = "delete from user where id =1"
 使用executeUpdate(String sql)方法完成数据修改操作，示例操作 ： 
 
 ```java
-statement st =conn.createstatement():String sql = "update user set name='' where name=''";int num =st.executeUpdate(sql);if(num>0){  system.out.println("修改成功！！")}
+statement st =conn.createstatement():
+String sql = "update user set name='' where name=''";
+int num =st.executeUpdate(sql);
+if(num>0){  
+system.out.println("修改成功！！")
+}
 ```
 
 > CRUD操作  -- read
@@ -921,7 +1183,12 @@ statement st =conn.createstatement():String sql = "update user set name='' where
 使用executeUpdate(String sql)方法完成数据查询操作，示例操作 ： 
 
 ```java
-·statement st =conn.createstatement():String sql = "select * from user where id =1";ResultSet rs =st.executeQuery(sql);while(rs.next()){    //根据获取列的数据类型，分别调用rs的相应方法映射到java对象中}
+·statement st =conn.createstatement():
+String sql = "select * from user where id =1";
+ResultSet rs =st.executeQuery(sql);
+while(rs.next()){ 
+//根据获取列的数据类型，分别调用rs的相应方法映射到java对象中
+}
 ```
 
 > 代码实现
@@ -929,27 +1196,155 @@ statement st =conn.createstatement():String sql = "update user set name='' where
 1. 提取工具类
 
 ```java
-package com.zhang.lesson2.utils;import java.io.IOException;import java.io.InputStream;import java.sql.*;import java.util.Calendar;import java.util.Properties;public class JdbcUtils {    private static String driver;    private static String url;    private static String username;    private static String password;    static{        try{            InputStream in = JdbcUtils.class.getClassLoader().getResourceAsStream("db.properties");            Properties properties = new Properties();            properties.load(in);            driver =properties.getProperty("driver");            url =properties.getProperty("url");            username =properties.getProperty("username");            password =properties.getProperty("password");            //1.驱动只加载一次            Class.forName(driver);        } catch (Exception e) {            e.printStackTrace();        }    }    //获取连接    public static  Connection getConnection() throws SQLException {        return DriverManager.getConnection(url, username, password);    }    //释放连接资源    public static  void release(Connection conn, Statement st, ResultSet rs){        if (rs !=null){            try {                rs.close();            } catch (SQLException throwables) {                throwables.printStackTrace();            }        }        if (st != null){            try {                st.close();            } catch (SQLException throwables) {                throwables.printStackTrace();            }            if (rs  != null){                try {                    rs.close();                } catch (SQLException throwables) {                    throwables.printStackTrace();                }            }        }    }}
+package com.zhang.lesson2.utils;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.*;
+import java.util.Calendar;
+import java.util.Properties;
+public class JdbcUtils {   
+private static String driver;    
+private static String url;   
+private static String username;    
+private static String password;    
+static{       
+try{         
+InputStream in = JdbcUtils.class.getClassLoader().getResourceAsStream("db.properties");     
+Properties properties = new Properties();       
+properties.load(in);        
+driver =properties.getProperty("driver");     
+url =properties.getProperty("url");         
+username =properties.getProperty("username");     
+password =properties.getProperty("password");        
+//1.驱动只加载一次          
+Class.forName(driver);    
+} catch (Exception e) { 
+e.printStackTrace();      
+}    }   
+//获取连接  
+public static  Connection getConnection() throws SQLException {    
+return DriverManager.getConnection(url, username, password);  
+}    
+//释放连接资源  
+public static  void release(Connection conn, Statement st, ResultSet rs){  
+if (rs !=null){      
+try {          
+rs.close();       
+} catch (SQLException throwables) {      
+throwables.printStackTrace();     
+}        }      
+if (st != null){      
+try {            
+st.close();        
+} catch (SQLException throwables) {     
+throwables.printStackTrace();        
+}       
+if (rs  != null){    
+try {             
+rs.close();         
+} catch (SQLException throwables) {      
+throwables.printStackTrace();             
+}            }        }    }}
 ```
 
 2. 编写增删改的方法，`executeUpdate`
 
    ```java
-   package com.zhang.lesson2.utils;import java.sql.Connection;import java.sql.ResultSet;import java.sql.SQLException;import java.sql.Statement;public class TestInsert {    public static void main(String[] args) {        Connection conn =null;        Statement st =null;        ResultSet rs =null;        try {            conn =JdbcUtils.getConnection();//获取数据库连接            st =conn.createStatement();            String sql ="INSERT INTO users(id,`NAME`,`PASSWORD`,`email`,`birthday`)" +                    "VALUES (4,'HeiDa','123456','15714034373@qq.com','1999-02-14')";            int i = st.executeUpdate(sql);            if (i >0){                System.out.println("插入成功！");            }        } catch (SQLException throwables) {            throwables.printStackTrace();        }finally {            JdbcUtils.release(conn,st,rs);        }    }}
+   package com.zhang.lesson2.utils;
+   import java.sql.Connection;import java.sql.ResultSet;
+   import java.sql.SQLException;
+   import java.sql.Statement;
+   public class TestInsert {   
+   public static void main(String[] args) {   
+   Connection conn =null;      
+   Statement st =null;     
+   ResultSet rs =null;     
+   try {           
+   conn =JdbcUtils.getConnection();//获取数据库连接    
+   st =conn.createStatement();      
+   String sql ="INSERT INTO users(id,`NAME`,`PASSWORD`,`email`,`birthday`)" +     
+   "VALUES (4,'HeiDa','123456','15714034373@qq.com','1999-02-14')";       
+   int i = st.executeUpdate(sql);        
+   if (i >0){          
+   System.out.println("插入成功！");      
+   }        } catch (SQLException throwables) { 
+   throwables.printStackTrace();    
+   }finally {         
+   JdbcUtils.release(conn,st,rs);    
+   }    }}
    ```
 
 ```java
-package com.zhang.lesson2.utils;import java.sql.Connection;import java.sql.ResultSet;import java.sql.SQLException;import java.sql.Statement;public class TestDelete {    public static void main(String[] args) {        Connection conn=null;        Statement st = null;        ResultSet rs =null;        try {            conn = JdbcUtils.getConnection();            st =conn.createStatement();            String sql =" delete from users  where id =4";            int i  = st.executeUpdate(sql);            if (i>0){                System.out.println( "删除成功");            }        } catch (SQLException throwables) {            throwables.printStackTrace();        }        finally {            JdbcUtils.release(conn,st,rs);        }    }}
+package com.zhang.lesson2.utils;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;import java.sql.Statement;public class TestDelete {  
+public static void main(String[] args) {   
+Connection conn=null;   
+Statement st = null;     
+ResultSet rs =null;    
+try {       
+conn = JdbcUtils.getConnection();    
+st =conn.createStatement();        
+String sql =" delete from users  where id =4";     
+int i  = st.executeUpdate(sql);        
+if (i>0){             
+System.out.println( "删除成功");      
+}        } catch (SQLException throwables) {    
+throwables.printStackTrace();     
+}        finally {      
+JdbcUtils.release(conn,st,rs);    
+}    }}
 ```
 
 ```java
-package com.zhang.lesson2.utils;import java.sql.Connection;import java.sql.ResultSet;import java.sql.SQLException;import java.sql.Statement;public class TestUpdate {    public static void main(String[] args) {        Connection conn=null;        Statement st =null;        ResultSet rs =null;        try {            conn = JdbcUtils.getConnection();            st =conn.createStatement();            String sql ="Update users set `NAME`= 'zcz',`email`='1571403473@qq.com' WHERE id = 1 ";            int i = st.executeUpdate(sql);            if (i>0){                System.out.println("修改成功");            }        } catch (SQLException throwables) {            throwables.printStackTrace();        }finally {            JdbcUtils.release(conn,st,rs);        }    }}
+package com.zhang.lesson2.utils;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;import java.sql.Statement;public class TestUpdate { 
+public static void main(String[] args) {     
+Connection conn=null;      
+Statement st =null;       
+ResultSet rs =null;    
+try {         
+conn = JdbcUtils.getConnection();  
+st =conn.createStatement();      
+String sql ="Update users set `NAME`= 'zcz',`email`='1571403473@qq.com' WHERE id = 1 ";       
+int i = st.executeUpdate(sql);    
+if (i>0){            
+System.out.println("修改成功");      
+}        } catch (SQLException throwables) {   
+throwables.printStackTrace();    
+}finally {        
+JdbcUtils.release(conn,st,rs);      
+}    }}
 ```
 
 3.查询`executeQuery`
 
 ```java
-package com.zhang.lesson2.utils;import java.sql.Connection;import java.sql.ResultSet;import java.sql.SQLException;import java.sql.Statement;public class TestSelect {    public static void main(String[] args) {        Connection conn =null;        Statement st =null;        ResultSet rs =null;        try {             conn = JdbcUtils.getConnection();             st =conn.createStatement();             String sql ="select * from users";             rs = st.executeQuery(sql); //查询完毕会返回一个结果集            while (rs.next()){                System.out.printf(rs.getString("NAME"));            }        } catch (SQLException throwables) {            throwables.printStackTrace();        }finally {            JdbcUtils.release(conn,st,rs);        }    }}
+package com.zhang.lesson2.utils;
+import java.sql.Connection;
+mport java.sql.ResultSet;
+import java.sql.SQLException;import java.sql.Statement;
+public class TestSelect {   
+public static void main(String[] args) { 
+Connection conn =null;     
+Statement st =null;   
+ResultSet rs =null;    
+try {           
+conn = JdbcUtils.getConnection();       
+st =conn.createStatement();         
+String sql ="select * from users";        
+rs = st.executeQuery(sql); 
+//查询完毕会返回一个结果集      
+while (rs.next()){             
+System.out.printf(rs.getString("NAME"));      
+}        } catch (SQLException throwables) { 
+throwables.printStackTrace();    
+}finally {      
+JdbcUtils.release(conn,st,rs);   
+}    }}
 ```
 
 > SQL注入问题
@@ -957,7 +1352,34 @@ package com.zhang.lesson2.utils;import java.sql.Connection;import java.sql.Resul
 SQL存在漏洞，会被攻击，导致数据泄露 ==SQL会被拼接 or==
 
 ```java
-package com.zhang.lesson2.utils;import java.sql.Connection;import java.sql.ResultSet;import java.sql.SQLException;import java.sql.Statement;public class SQL注入 {    public static void main(String[] args) {      //  login("zcz","123456");       // login(" ' or '1=1"," 'or '1=1");        login("1 and version() >0"," 'or '1=1");    }    //登录业务    public  static  void  login(String username,String password){        Connection conn =null;        Statement st =null;        ResultSet rs =null;        try {            conn = JdbcUtils.getConnection();            st =conn.createStatement();            String sql ="select * from users where NAME ='"+username+"' AND password = '"+password+"'";            rs = st.executeQuery(sql); //查询完毕会返回一个结果集            while (rs.next()){                System.out.printf(rs.getString("NAME"));                System.out.printf(rs.getString("password"));                System.out.println("=============================");            }        } catch (SQLException throwables) {            throwables.printStackTrace();        }finally {            JdbcUtils.release(conn,st,rs);        }    }    }
+package com.zhang.lesson2.utils;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+public class SQL注入 {   
+public static void main(String[] args) {    
+//  login("zcz","123456");   
+// login(" ' or '1=1"," 'or '1=1"); 
+login("1 and version() >0"," 'or '1=1");    }   
+//登录业务    public  static  void  login(String username,String password){ 
+Connection conn =null;      
+Statement st =null;    
+ResultSet rs =null;       
+try {        
+conn = JdbcUtils.getConnection();     
+st =conn.createStatement();       
+String sql ="select * from users where NAME ='"+username+"' AND password = '"+password+"'";     
+rs = st.executeQuery(sql); 
+//查询完毕会返回一个结果集     
+while (rs.next()){            
+System.out.printf(rs.getString("NAME"));      
+System.out.printf(rs.getString("password"));   
+System.out.println("=============================");    
+}     } catch (SQLException throwables) {    
+throwables.printStackTrace();    
+}finally {        
+JdbcUtils.release(conn,st,rs);        }    }    }
 ```
 
 ### 10.5、PrepareStatement对象
@@ -969,7 +1391,36 @@ PrepareStatement  可以防止SQL注入	，效率更高！
 1. 新增
 
    ```java
-   package com.zhang.lesson3;import com.zhang.lesson2.utils.JdbcUtils;import java.sql.*;import  java.util.Date;public class TestInsert {    public static void main(String[] args) {        Connection conn = null;        PreparedStatement st = null;        ResultSet rs = null;        try {            conn =JdbcUtils.getConnection();            //区别            //使用问号？占位符代替参数            String sql ="INSERT INTO users(id,`NAME`,`PASSWORD`,`email`,`birthday`) values(?,?,?,?,?)";            st   = conn.prepareStatement(sql);//预编译SQL，先写SQL，然后不执行            //手动给参数赋值            st.setInt(1,4);            st.setString(2,"聂士煌");            st.setString(3,"456789");            st.setString(4,"789654@163.com");            //注意点 ： sql.Date   数据库   java.sql.Date            //        util.Date  java   new Date().getTime()获得时间戳            st.setDate(5, new  java.sql.Date(new Date().getTime()));            //执行            int i = st.executeUpdate();            if (i>0){                System.out.println("插入成功！");            }        } catch (SQLException throwables) {            throwables.printStackTrace();        }finally {            JdbcUtils.release(conn,st,rs);        }    }}
+   package com.zhang.lesson3;
+   import com.zhang.lesson2.utils.JdbcUtils;import java.sql.*;
+   import  java.util.Date;public class TestInsert {  
+   public static void main(String[] args) {       
+   Connection conn = null;    
+   PreparedStatement st = null;  
+   ResultSet rs = null;      
+   try {         
+   conn =JdbcUtils.getConnection();   
+   //区别          
+   //使用问号？占位符代替参数     
+   String sql ="INSERT INTO users(id,`NAME`,`PASSWORD`,`email`,`birthday`) values(?,?,?,?,?)";   
+   st   = conn.prepareStatement(sql);//预编译SQL，先写SQL，然后不执行    
+   //手动给参数赋值         
+   st.setInt(1,4);      
+   st.setString(2,"聂士煌");   
+   st.setString(3,"456789");   
+   st.setString(4,"789654@163.com");    
+   //注意点 ： sql.Date   数据库   java.sql.Date   
+   //        util.Date  java   new Date().getTime()获得时间戳     
+   st.setDate(5, new  java.sql.Date(new Date().getTime()));     
+   //执行       
+   int i = st.executeUpdate();      
+   if (i>0){             
+   System.out.println("插入成功！");        
+   }        } catch (SQLException throwables) {    
+   
+   throwables.printStackTrace();    
+   }finally {        
+   JdbcUtils.release(conn,st,rs);        }    }}
    ```
 
    
@@ -977,7 +1428,27 @@ PrepareStatement  可以防止SQL注入	，效率更高！
 2. 删除
 
    ```java
-   package com.zhang.lesson3;import com.zhang.lesson2.utils.JdbcUtils;import java.sql.Connection;import java.sql.PreparedStatement;import java.sql.SQLException;public class TestDelete {    public static void main(String[] args) {        Connection conn =null;        PreparedStatement st =null;        try {             conn= JdbcUtils.getConnection();             String sql="delete from  users where id=?";             st = conn.prepareStatement(sql);             st.setInt(1,4);            int i = st.executeUpdate();            if (i>0){                System.out.println("删除成功！");            }        } catch (SQLException throwables) {            throwables.printStackTrace();        }finally {            JdbcUtils.release(conn,st,null);        }    }}
+   package com.zhang.lesson3;
+   import com.zhang.lesson2.utils.JdbcUtils;
+   import java.sql.Connection;
+   import java.sql.PreparedStatement;
+   import java.sql.SQLException;public class TestDelete {   
+   public static void main(String[] args) {   
+   Connection conn =null;    
+   PreparedStatement st =null;   
+   try {           
+   conn= JdbcUtils.getConnection();     
+   String sql="delete from  users where id=?";    
+   st = conn.prepareStatement(sql);        
+   st.setInt(1,4);        
+   int i = st.executeUpdate();    
+   if (i>0){             
+   System.out.println("删除成功！");     
+   }        } catch (SQLException throwables) {     
+   throwables.printStackTrace();    
+   }finally {      
+   JdbcUtils.release(conn,st,null);     
+   }    }}
    ```
 
    
@@ -985,7 +1456,26 @@ PrepareStatement  可以防止SQL注入	，效率更高！
 3. 更新
 
    ```java
-   package com.zhang.lesson3;import com.zhang.lesson2.utils.JdbcUtils;import java.sql.Connection;import java.sql.PreparedStatement;import java.sql.SQLException;public class TestUpdate {    public static void main(String[] args) {        Connection conn =null;        PreparedStatement st =null;        try {           conn = JdbcUtils.getConnection();           String sql="update users set    `NAME`  =?  where id=? ;";           st=conn.prepareStatement(sql);           st.setString(1,"任凯龙");           st.setInt(2,2);            int i = st.executeUpdate();            if (i>0){                System.out.println("修改成功");            }        } catch (SQLException throwables) {            throwables.printStackTrace();        }finally {            JdbcUtils.release(conn,st,null);        }    }}
+   package com.zhang.lesson3;
+   import com.zhang.lesson2.utils.JdbcUtils;import java.sql.Connection;
+   import java.sql.PreparedStatement;
+   import java.sql.SQLException;public class TestUpdate {  
+   public static void main(String[] args) {     
+   Connection conn =null;    
+   PreparedStatement st =null;     
+   try {        
+   conn = JdbcUtils.getConnection();      
+   String sql="update users set    `NAME`  =?  where id=? ;";   
+   st=conn.prepareStatement(sql);         
+   st.setString(1,"任凯龙");        
+   st.setInt(2,2);        
+   int i = st.executeUpdate();   
+   if (i>0){               
+   System.out.println("修改成功");    
+   }        } catch (SQLException throwables) {    
+   throwables.printStackTrace();     
+   }finally {      
+   JdbcUtils.release(conn,st,null);        }    }}
    ```
 
    
@@ -993,7 +1483,27 @@ PrepareStatement  可以防止SQL注入	，效率更高！
 4. 查询
 
    ```java
-   package com.zhang.lesson3;import com.zhang.lesson2.utils.JdbcUtils;import java.sql.Connection;import java.sql.PreparedStatement;import java.sql.ResultSet;import java.sql.SQLException;public class TestSelect {    public static void main(String[] args) {        Connection conn=null;        PreparedStatement st =null;        ResultSet rs =null;        try {             conn= JdbcUtils.getConnection();             String sql="select * from users  where id =?;";             st=conn.prepareStatement(sql);             st.setInt(1,2);             rs=st.executeQuery();             if (rs.next()){                 System.out.println(rs.getString("NAME"));             }        } catch (SQLException throwables) {            throwables.printStackTrace();        }finally {            JdbcUtils.release(conn,st,rs);        }    }} 
+   package com.zhang.lesson3;
+   import com.zhang.lesson2.utils.JdbcUtils;
+   import java.sql.Connection;import java.sql.PreparedStatement;
+   import java.sql.ResultSet;import java.sql.SQLException;public class TestSelect {   
+   public static void main(String[] args) {     
+   Connection conn=null;     
+   PreparedStatement st =null;   
+   ResultSet rs =null;    
+   try {         
+   conn= JdbcUtils.getConnection();    
+   String sql="select * from users  where id =?;";     
+   st=conn.prepareStatement(sql);       
+   st.setInt(1,2);        
+   rs=st.executeQuery();      
+   if (rs.next()){           
+   System.out.println(rs.getString("NAME"));    
+   }        } catch (SQLException throwables) {  
+   throwables.printStackTrace();      
+   }finally {          
+   JdbcUtils.release(conn,st,rs);   
+   }    }} 
    ```
 
    
@@ -1001,7 +1511,38 @@ PrepareStatement  可以防止SQL注入	，效率更高！
 5. 防止SQL注入
 
    ```java
-   package com.zhang.lesson2.utils;import java.sql.*;public class SQL注入 {    public static void main(String[] args) {//        login("zcz","123456");       // login(" ' or '1=1"," 'or '1=1");        login("1 and version() >0"," 'or '1=1");    }    //登录业务    public  static  void  login(String username,String password){        Connection conn =null;        PreparedStatement st =null;        ResultSet rs =null;        try {            conn = JdbcUtils.getConnection();            //PrepareStatement 防止注入的本质，把传递进来的参数当做字符            //假设其中存在转义字符，就直接忽略  比如， ‘ 会被直接转义            String sql ="select * from users where NAME =? AND password = ?";            st=conn.prepareStatement(sql);            st.setString(1,username);            st.setString(2,password);            rs = st.executeQuery(); //查询完毕会返回一个结果集            while (rs.next()){                System.out.printf(rs.getString("NAME"));                System.out.printf(rs.getString("password"));                System.out.println("=============================");            }        } catch (SQLException throwables) {            throwables.printStackTrace();        }finally {            JdbcUtils.release(conn,st,rs);        }    }    }
+   package com.zhang.lesson2.utils;
+   import java.sql.*;
+   public class SQL注入 {  
+   public static void main(String[] args) {
+   //    login("zcz","123456");   
+   // login(" ' or '1=1"," 'or '1=1");      
+   login("1 and version() >0"," 'or '1=1");  
+   }   
+   //登录业务 
+   public  static  void  login(String username,String password){   
+   Connection conn =null;   
+   PreparedStatement st =null;     
+   ResultSet rs =null;       
+   try {          
+   conn = JdbcUtils.getConnection();     
+   //PrepareStatement 防止注入的本质，把传递进来的参数当做字符     
+   //假设其中存在转义字符，就直接忽略  比如， ‘ 会被直接转义    
+   String sql ="select * from users where NAME =? AND password = ?";   
+   st=conn.prepareStatement(sql);           
+   st.setString(1,username);        
+   st.setString(2,password);         
+   rs = st.executeQuery(); 
+   //查询完毕会返回一个结果集       
+   while (rs.next()){          
+   System.out.printf(rs.getString("NAME"));        
+   System.out.printf(rs.getString("password"));    
+   System.out.println("=============================");   
+   }        } catch (SQLException throwables) {     
+   throwables.printStackTrace();   
+   }finally {        
+   JdbcUtils.release(conn,st,rs);    
+   }    }    }
    ```
 
    
@@ -1057,7 +1598,38 @@ PrepareStatement  可以防止SQL注入	，效率更高！
 3. 可以在catch语句中显示的定义 回滚语句，但默认失败就回滚
 
 ```java
-package com.zhang.lesson4;import com.zhang.lesson2.utils.JdbcUtils;import java.sql.Connection;import java.sql.PreparedStatement;import java.sql.ResultSet;import java.sql.SQLException;public class TestTransaction {    public static void main(String[] args) {        Connection conn =null;        PreparedStatement st =null;        ResultSet rs =null;        try {            conn = JdbcUtils.getConnection();            //关闭数据库的自动提交功能,自动开始事务            conn.setAutoCommit(false);//开启事务            String sql1 ="update account set money = money -100 where name = 'A'";            st=conn.prepareStatement(sql1);            st.executeUpdate();            String sql2 ="update account set money = money +100 where name = 'B'";            st =conn.prepareStatement(sql2);            st.executeUpdate();            //业务完毕，提交事务            conn.commit();            System.out.println("操作成功！");        } catch (SQLException throwables) {            try {                //失败默认回滚                conn.rollback();//如果失败就回滚            } catch (SQLException e) {                e.printStackTrace();            }            throwables.printStackTrace();        }finally {JdbcUtils.release(conn,st,rs);        }    }}
+package com.zhang.lesson4;import com.zhang.lesson2.utils.JdbcUtils;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;public class TestTransaction {    
+public static void main(String[] args) {     
+Connection conn =null;   
+PreparedStatement st =null;    
+ResultSet rs =null;     
+try {      
+conn = JdbcUtils.getConnection();   
+//关闭数据库的自动提交功能,自动开始事务     
+conn.setAutoCommit(false);//开启事务        
+String sql1 ="update account set money = money -100 where name = 'A'";    
+st=conn.prepareStatement(sql1);        
+st.executeUpdate();        
+String sql2 ="update account set money = money +100 where name = 'B'";       
+st =conn.prepareStatement(sql2);       
+st.executeUpdate();      
+//业务完毕，提交事务        
+conn.commit();        
+System.out.println("操作成功！");     
+} catch (SQLException throwables) {    
+try {           
+//失败默认回滚    
+conn.rollback();//如果失败就回滚    
+} catch (SQLException e) {       
+e.printStackTrace();       
+}          
+throwables.printStackTrace();    
+}finally {JdbcUtils.release(conn,st,rs);    
+}    }}
 ```
 
 ### 10.9、数据库连接池
