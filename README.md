@@ -614,7 +614,8 @@ SELECT `studentno` AS 编号 ,`studentname` as 姓名 FROM studentWHERE `address
 
 ```sql
 -- =============  连表查询  join ===========================
--- 查询参加了考试的同学（学号，姓名，科目编号，分数）SELECT * FROM student/*思路	
+-- 查询参加了考试的同学（学号，姓名，科目编号，分数）SELECT * FROM student
+/*思路	
 1.分析需求，分析查询字段来自哪些表，（连接查询）2.确定使用哪种连接查询？  
 7种确定交叉点（这两个表中哪个数据是相同的）
 判断的条件  ： 学生表中的   studentno  = 成绩表  
@@ -637,7 +638,8 @@ left  JOIN  result AS rON s.studentno =r.StudentNo
 - 查询参加了考试的同学（学号，姓名，科目编号，分数）SELECT * FROM student
 /*思路	
 1.分析需求，分析查询字段来自哪些表，（连接查询）2.确定使用哪种连接查询？  
-7种确定交叉点（这两个表中哪个数据是相同的）判断的条件  ： 学生表中的   studentno  = 成绩表  studentno
+7种确定交叉点（这两个表中哪个数据是相同的）
+判断的条件  ： 学生表中的   studentno  = 成绩表  studentno
 */
 -- JOIN（连接的表） ON（判断的条件） 连接查询
 -- where  等值查询
@@ -654,7 +656,10 @@ ON s.studentno =r.StudentNoWHERE studentresult is NULL
 1.分析需求，分析查询字段来自哪些表，（连接查询）
 2.确定使用哪种连接查询？  
 7种确定交叉点（这两个表中哪个数据是相同的）
-判断的条件  ： 学生表中的   studentno  = 成绩表  studentno*/SELECT  s.StudentNo AS 学号 ,StudentName AS 姓名 ,subjectname as 科目名,StudentResult as 成绩FROM student AS s
+判断的条件  ： 
+学生表中的   studentno  = 成绩表  studentno
+*/
+SELECT  s.StudentNo AS 学号 ,StudentName AS 姓名 ,subjectname as 科目名,StudentResult as 成绩FROM student AS s
 LEFT JOIN result AS ron s.studentno = r.StudentNo
 INNER JOIN `subject` as subON s.gradeid =sub.gradeid
 -- 我要查询哪些数据....-- 从哪几个表中查询  from 表 xxx Join	连接的表  on 交叉条件
