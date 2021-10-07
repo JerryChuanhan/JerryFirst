@@ -1,5 +1,5 @@
 # JerryFirst
-自己的第一个仓库
+Mysql
 ## Mysql的学习
 
 JavaEE：企业级Java开发  Web
