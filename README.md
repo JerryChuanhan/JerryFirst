@@ -1,4 +1,4 @@
-# JerryFirst
+# JerryFirstMySQL
 Mysql
 ## Mysql的学习
 
