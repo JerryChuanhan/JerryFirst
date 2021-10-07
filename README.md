@@ -685,7 +685,8 @@ INNER JOIN result AS rWHERE s.studentno =r.StudentNoORDER BY StudentResult ASC
 -- 分页 ， 每页只显示五条数据
 -- 语法 ：  limit 起始值  ，页面的大小-- 网页应用 ： 当前页， 总的页数 ， 页面的大小
 -- LIMIT  0,5	      1~5	-- LIMIT  1,5        2~6-- 第一页  limit 0,5    （1-1）*5
--- 第二页  limit 5,5     （2-1）*5-- 第三页  limit 10,5      （3-1）*5-- 第N页  limit 0,5            （N-1）* pagesize，pagesize-- 【 pagesize  :  页面大小 	】
+-- 第二页  limit 5,5     （2-1）*5-- 第三页  limit 10,5      （3-1）*5-- 第N页  limit 0,5            （N-1）* pagesize，pagesize
+-- 【 pagesize  :  页面大小 	】
 -- 【（n-1）*pagesize起始值】
 -- 【 n  当前页】
 -- 【数据总数/页面大小  = 总页数】
